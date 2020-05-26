@@ -1,0 +1,63 @@
+---
+# tasks file for make_vm_template_unique
+
+  # Determinar si la VM única ya se encuentra configurada (si falla es que no)
+- name: Determine if the unique VM is already configured (if it fails, it's not)
+  wait_for_connection:
+    timeout: "{{ vm_unique_connection_test_timeout }}"
+  register: connection_test
+  ignore_errors: yes  # We ignore the errors because we want to determine if there is an SSH connection to the VM.
+                      # If there is not, it means that the VM (IPs, SSH, etc.) has not been configured yet since
+                      # the template was cloned and therefore the tasks in the following block must be executed
+
+                      # Ignoramos los errores porque queremos determinar si hay conexión SSH a la VM
+                      # Si no la hay, significa que todavía no se configuró la VM (IPs, SSH, etc.)
+                      # desde que se clonó y por ello se deben ejecutar las tasks del bloque siguiente
+
+- block:
+    # Copiar la llave SSH indicada desde este equipo a la VM
+  - name: Copy the indicated SSH key from this computer to the VM
+    command: >
+      sshpass -p '{{ vm_template_login_pass }}'
+      ssh-copy-id -o StrictHostKeyChecking=no -i {{ vm_unique_ssh_identity_file }}
+      {{ vm_template_login_user }}@{{ vm_template_host }}
+    delegate_to: localhost
+
+    # Establecer el hostname correcto para la VM
+  - name: Set the correct VM hostname
+    hostname:
+      name: "{{ vm_unique_hostname }}"
+    delegate_to: "{{ vm_template_host }}"
+
+    # Actualizar contraseñas de usuarios que pueden ser vulnerables
+  - name: Update passwords of users who may be vulnerable
+    user:
+      name: "{{ item.username }}"
+      password: "{{ item.password }}"
+    with_items: "{{ vm_unique_passwors_to_change }}"
+    delegate_to: "{{ vm_template_host }}"
+
+    # Configurar interfaces de red de la VM según lo indicado
+  - name: Configure VM network interfaces as indicated
+    template:
+      src: etc/network/interfaces.j2
+      dest: /etc/network/interfaces
+    when: vm_unique_net_interfaces | length > 0
+    delegate_to: "{{ vm_template_host }}"
+
+    # Reiniciar la VM para aplicar la reconfiguración (fallará por cambio de IPs)
+  - name: Reboot the VM to fully apply configuration (will fail due to change of IPs)
+    reboot:
+      reboot_timeout: 1
+    delegate_to: "{{ vm_template_host }}"
+    ignore_errors: yes  # We know and expect Ansible mark this task as 'failed' since the
+                        # VM will start with the setted IP and not with the vm_template_host
+
+                        # Sabemos y esperamos que Ansible marque esta tarea como 'failed' ya que
+                        # la VM iniciará con la IP establecida y no con la de vm_template_host
+
+    # Esperar por conexión con la VM única ya configurada
+  - name: Wait for connection to the unique VM already configured
+    wait_for_connection:
+
+  when: connection_test.failed | bool

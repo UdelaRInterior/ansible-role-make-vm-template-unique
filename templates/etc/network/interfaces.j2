@@ -1,0 +1,27 @@
+# This file describes the network interfaces available on your system
+# and how to activate them. For more information, see interfaces(5).
+
+source /etc/network/interfaces.d/*
+
+# The loopback network interface
+auto lo
+iface lo inet loopback
+
+{% for interface in vm_unique_net_interfaces %}
+auto {{ interface.name }}
+{% if (interface.ip4 is defined) %}
+iface {{ interface.name }} inet static
+address {{ interface.ip4 }}
+netmask {{ interface.netmask4 }}
+gateway {{ interface.gw4 }}
+{% endif %}
+
+{% if (interface.ip6 is defined) %}
+iface {{ interface.name }} inet6 static
+address {{ interface.ip6 }}
+netmask {{ interface.netmask6 }}
+gateway {{ interface.gw6 }}
+{% endif %}
+
+
+{% endfor %}

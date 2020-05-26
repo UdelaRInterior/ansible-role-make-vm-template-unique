@@ -1,0 +1,26 @@
+galaxy_info:
+  role_name: make_vm_template_unique
+  author: Santiago Martínez (@santiagomr)
+  description: Configures a VM created from template to be unique
+  company: UdelaR Interior (@udelarinterior)
+  license: GPL-3.0-only
+
+  min_ansible_version: 2.7
+
+  platforms:
+  - name: Debian
+    versions:
+    - buster
+    - stretch
+  - name: Ubuntu
+    versions:
+    - bionic
+
+  galaxy_tags:
+    - virtual machines
+    - template
+    - ansible
+    - infraestructure
+    - sysadmin
+
+dependencies: []

@@ -1,6 +1,8 @@
 Ansible Role make_vm_template_unique
 =========
 
+[![Galaxy](https://img.shields.io/badge/galaxy-UdelaRInterior.make__vm__template__unique-blue.svg)](https://galaxy.ansible.com/udelarinterior/make_vm_template_unique)
+
 This role allows to convert a VM created from a template into a unique VM (destined for production) with its own IP addresses, users->passwords, hostname and SSH access.
 
 A utility for continuous flow with Ansible, from host creation to production-ready service.
@@ -103,7 +105,7 @@ Example Playbook
 License
 -------
 
-BSD(c) Universidad de la República (UdelaR), Red de Unidades Informáticas de la UdelaR en el Interior.
+(c) Universidad de la República (UdelaR), Red de Unidades Informáticas de la UdelaR en el Interior.
 
 Licenced under GPL-v3
 

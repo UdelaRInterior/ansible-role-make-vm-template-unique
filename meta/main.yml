@@ -17,7 +17,8 @@ galaxy_info:
     - bionic
 
   galaxy_tags:
-    - virtual machines
+    - virtual
+    - machines
     - template
     - ansible
     - infraestructure

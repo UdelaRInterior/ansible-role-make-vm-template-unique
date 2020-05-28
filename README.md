@@ -54,6 +54,9 @@ vm_unique_ssh_config_path: '' # e.g. '/etc/ssh/sshd_config'
 # Configure the SSH login type allowed for root
 vm_unique_ssh_permit_root_login: prohibit-password  # prohibit-password - no - yes
 
+# Source template and destination configuration file for network interfaces
+vm_unique_net_config_template: etc/network/interfaces.j2
+vm_unique_net_config_path: /etc/network/interfaces
 # To avoid problems (IP conflicts), this list is empty by default, causing the related task to be skipped
 vm_unique_net_interfaces: []
   # - name: eth0

@@ -50,8 +50,8 @@
     # Configurar interfaces de red de la VM según lo indicado
   - name: Configure VM network interfaces as indicated
     template:
-      src: etc/network/interfaces.j2
-      dest: /etc/network/interfaces
+      src: "{{ vm_unique_net_config_template }}"
+      dest: "{{ vm_unique_net_config_path }}"
     when: vm_unique_net_interfaces | length > 0
     delegate_to: "{{ vm_template_host }}"
 

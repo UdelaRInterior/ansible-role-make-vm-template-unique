@@ -37,6 +37,16 @@
     with_items: "{{ vm_unique_passwors_to_change }}"
     delegate_to: "{{ vm_template_host }}"
 
+    # Configurar el tipo de inicio de sesión SSH permitido para root
+  - name: Configure the SSH login type allowed for root
+    lineinfile:
+      dest: "{{ vm_unique_ssh_config_path }}"
+      regexp: "^PermitRootLogin"
+      line: "PermitRootLogin {{ vm_unique_ssh_permit_root_login }}"
+      state: present
+    delegate_to: "{{ vm_template_host }}"
+    when: vm_unique_ssh_config_path | length > 0
+
     # Configurar interfaces de red de la VM según lo indicado
   - name: Configure VM network interfaces as indicated
     template:

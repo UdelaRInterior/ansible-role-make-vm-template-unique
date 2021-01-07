@@ -53,3 +53,6 @@ vm_unique_net_interfaces: []
   #   ip6: 200:db9::10
   #   gw6: 200:db9::1
   #   netmask6: 64
+
+#vm_unique_net_nameserver: "192.168.1.2, 192.168.1.3" 
+#vm_unique_net_search: "example.org" 

@@ -1,0 +1,27 @@
+network:
+  ethernets:
+{% for interface in vm_unique_net_interfaces %}
+    {{ interface.name }}:
+      addresses:
+{% if (interface.ip4 is defined) %}
+        - {{ interface.ip4 }}/{{ interface.netmask4 }}
+{% endif %}
+{% if (interface.ip6 is defined) %}
+        - {{ interface.ip6 }}/{{ interface.netmask6 }}
+{% endif %}
+{% if (interface.ip4 is defined) %}
+      gateway4: {{ interface.gw4 }}
+{% endif %}
+{% if (interface.ip6 is defined) %}
+      gateway6: {{ interface.gw6 }}
+{% endif %}
+{% if (vm_unique_net_nameserver is defined) %}
+      nameservers:
+        addresses: [{{ vm_unique_net_nameserver }}]
+{% if (vm_unique_net_search is defined) %}
+        search: [{{ vm_unique_net_search }}]
+{% endif %}
+{% endif %}
+  version: 2
+
+{% endfor %}

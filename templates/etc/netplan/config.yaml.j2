@@ -9,17 +9,17 @@ network:
 {% if (interface.ip6 is defined) %}
         - {{ interface.ip6 }}/{{ interface.netmask6 }}
 {% endif %}
-{% if (interface.ip4 is defined) %}
+{% if (interface.gw4 is defined) %}
       gateway4: {{ interface.gw4 }}
 {% endif %}
-{% if (interface.ip6 is defined) %}
+{% if (interface.gw6 is defined) %}
       gateway6: {{ interface.gw6 }}
 {% endif %}
-{% if (vm_unique_net_nameserver is defined) %}
+{% if (interface.nameservers is defined) %}
       nameservers:
-        addresses: [{{ vm_unique_net_nameserver }}]
-{% if (vm_unique_net_search is defined) %}
-        search: [{{ vm_unique_net_search }}]
+        addresses: [{{ interface.nameservers | join(',') }}]
+{% if (interface.search is defined) %}
+        search: [{{ interface.search }}]
 {% endif %}
 {% endif %}
   version: 2

@@ -36,7 +36,8 @@ vm_unique_ssh_config_path: '' # e.g. '/etc/ssh/sshd_config'
 # Configure the SSH login type allowed for root
 vm_unique_ssh_permit_root_login: prohibit-password  # prohibit-password - no - yes
 
-# Source template and destination configuration file for network interfaces
+# Source template and destination configuration file for network interfaces. Typical example
+# for Debian-based distributions. Look at the "templates" folder for more examples.
 vm_unique_net_config_template: etc/network/interfaces.j2
 vm_unique_net_config_path: /etc/network/interfaces
 # To avoid problems (IP conflicts), this list is empty by default, causing the related task to be skipped
@@ -54,6 +55,6 @@ vm_unique_net_interfaces: []
   #   gw6: 200:db9::1
   #   netmask6: 64
   #   nameservers:
-  #     - '1.1.1.1'  
+  #     - '1.1.1.1'
   #     - '8.8.8.8'
-  
+

@@ -11,7 +11,7 @@ A utility for continuous flow with Ansible, from host creation to production-rea
 Requirements
 ------------
 
-A VM running on a known address and with superuser access by password is required.
+A VM running on a known address and with superuser access by password and `sshpass` tool installed on your ansible controller is required.
 
 Typically, that VM will be created from a template, and the required data will be that used when the template was created.
 

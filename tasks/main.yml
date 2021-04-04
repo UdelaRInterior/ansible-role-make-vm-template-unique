@@ -34,7 +34,7 @@
     user:
       name: "{{ item.username }}"
       password: "{{ item.password }}"
-    with_items: "{{ vm_unique_passwors_to_change }}"
+    with_items: "{{ vm_unique_passwords_to_change }}"
     delegate_to: "{{ vm_template_host }}"
 
     # Configurar el tipo de inicio de sesión SSH permitido para root

@@ -45,7 +45,7 @@ vm_unique_ssh_identity_file: ~/.ssh/id_rsa.pub
 vm_unique_hostname: "{{ inventory_hostname.split('.')[0] }}"
 
 # Collection of user->password to which it's recommended to change the default password for security
-vm_unique_passwors_to_change:
+vm_unique_passwords_to_change:
   - username: root
     password: "{{ 'unique_and_strong_pass' | password_hash('sha512', 'my_custom_salt') }}"
 
@@ -93,7 +93,7 @@ Example Playbook
           # System hostname
           vm_unique_hostname: "{{ inventory_hostname.split('.')[0] }}"
           # Collection of user->password to which it's recommended to change the default password for security
-          vm_unique_passwors_to_change:
+          vm_unique_passwords_to_change:
             - username: root
               password: "{{ 'unique_and_strong_pass' | password_hash('sha512', 'my_custom_salt') }}"
           # Unique VM network interface configuration
